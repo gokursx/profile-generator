@@ -1,43 +1,29 @@
-
 const readline = require("readline");
-
-const questions = [
-  "What's your name? Nicknames are also acceptable :)",
-  "What's an activity you like doing?",
-  "What do you listen to while doing that?",
-  "Which meal is your favourite (eg: dinner, brunch, etc.)",
-  "What's your favourite thing to eat for that meal?",
-  "Which sport is your absolute favourite?",
-  "What is your superpower? In a few words, tell us what you are amazing at!"
-];
-
-const answers = {};
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: process.stdout,
 });
 
-let questionIndex = 0;
+rl.question("What's your name? Nicknames are also acceptable :)", (name) => {
+  rl.question("What's an activity you like doing?", (activity) => {
+    rl.question("What do you listen to while doing that?", (listen) => {
+      rl.question("Which meal is your favourite (eg: dinner, brunch, etc.)", (meal) => {
+        rl.question("What's your favourite thing to eat for that meal?", (food) => {
+          rl.question("Which sport is your absolute favourite?", (sport) => {
+            rl.question("What is your superpower? In a few words, tell us what you are amazing at!", (superpower) => {
+              console.log(`
+                ${name} likes ${activity} while listening to ${listen}. 
+                They like eating ${meal} for their favorite meal ${food}. 
+                ${name}'s absolute favorite sport is ${sport}.
+                When the survey asked their superpower they answered: ${superpower}
+              `);
 
-const askQuestion = function () {
-  if (questionIndex < questions.length) {
-    rl.question(`${questions[questionIndex]}\n`, (answer) => {
-      answers[questionIndex] = answer;
-      questionIndex++;
-      askQuestion();
+              rl.close();
+            });
+          });
+        });
+      });
     });
-  } else {
-    rl.close();
-
-    console.log("Your New Profile:");
-    setTimeout(() => console.log(`
-    ${answers[0]} likes ${answers[1]} while listening to ${answers[2]}. 
-    They like eating ${answers[4]} for their favorite meal ${answers[3]}. 
-    ${answers[0]}'s absolute favorite sport is ${answers[5]}.
-    When ${answers[0]} was asked their superpower they answered: ${answers[6]}
-  `), 1500);
-  }
-}
-
-askQuestion();
+  });
+});
